@@ -5,7 +5,7 @@ type DateInfo = {
   month: number;
   day?: number; // dayはオプショナルに設定（今月以外では不要）
 };
-export default function CalendarMonthView() {
+export default function Home() {
   const today = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
