@@ -1,24 +1,44 @@
+// Tab.tsx
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Tab = () => {
+  const pathname = usePathname();
+
+  // 現在のページに基づいてアイコンを切り替え
+  const isCalendarPage = pathname.startsWith("/calendar");
+  const isAlarmPage = pathname === "/alarm" || pathname === "/alarmAdd";
+
   return (
-    <div className="flex justify-center space-x-8 items-center h-[76px] shadow">
-      <ul className="w-[200px] h-full flex justify-center items-center">
+    <div className="flex justify-center items-center h-[76px] shadow">
+      <ul className="w-[240px] h-full flex justify-center items-center">
         <Link
           href="/calendar"
-          className="hover:bg-red-50 w-full h-full flex justify-center"
+          className={`hover:bg-red-50 w-full h-full flex justify-center `}
         >
-          <Image src="/red_calendar.svg" alt="logo" width={48} height={48} />
+          <Image
+            src={isCalendarPage ? "/red_calendar.svg" : "/gray_calendar.svg"}
+            alt="calendar icon"
+            width={48}
+            height={48}
+          />
         </Link>
       </ul>
-      <ul className="w-[200px] h-full flex justify-center items-center">
+      <ul className="w-[240px] h-full flex justify-center items-center">
         <Link
           href="/alarm"
-          className="hover:bg-red-50 w-full h-full flex justify-center"
+          className={`hover:bg-red-50 w-full h-full flex justify-center `}
         >
-          <Image src="/gray_alarm.svg" alt="logo" width={48} height={48} />
+          <Image
+            src={isAlarmPage ? "/red_alarm.svg" : "/gray_alarm.svg"}
+            alt="alarm icon"
+            width={48}
+            height={48}
+          />
         </Link>
       </ul>
     </div>
