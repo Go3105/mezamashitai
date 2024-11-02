@@ -31,8 +31,3 @@ button_h_plus.pack(pady=20)
 
 button_h_minus = tk.Button(root,text="時間-",command=on_click_h_minus)
 button_h_minus.pack(pady=20)
-
-
-
-
-root.mainloop
