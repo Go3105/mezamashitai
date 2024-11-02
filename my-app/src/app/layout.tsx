@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { AlarmProvider } from "./_components/AlarmContext";
 
 const noto = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={noto.className}>{children}</body>
+            <body className={noto.className}>
+                <AlarmProvider>{children}</AlarmProvider>
+            </body>
         </html>
     );
 }
