@@ -1,0 +1,21 @@
+{
+    "question": "今日の16:00から開始するイベントはどれですか？",
+    "options": [
+        {
+            "choice": "チーム勉強会",
+            "is_correct": "True"
+        },
+        {
+            "choice": "テスト勉強",
+            "is_correct": "False"
+        },
+        {
+            "choice": "チーム会議",
+            "is_correct": "True"
+        },
+        {
+            "choice": "報告会",
+            "is_correct": "False"
+        }
+    ]
+}

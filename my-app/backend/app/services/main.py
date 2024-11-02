@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from get_google_calendar import fetch_today_event
+from quiz_generation import generate_quiz
 
 app = Flask(__name__)
 
@@ -11,9 +12,13 @@ def get_today_events():
         return jsonify({"message": "No events found for today."}), 404
     return jsonify(events), 200
 
-# @app.route('/api/quiz', methods=['GET'])
-# def get_quiz():
-#     return "Hello world"
+@app.route('/api/today_quiz', methods=['GET'])
+def get_today_quiz():
+    """今日の予定から作成したクイズを取得するAPIエンドポイント"""
+    quiz = generate_quiz()
+    if not quiz:
+        return jsonify({"message": "No quiz generated for today."}), 404
+    return quiz, 200
 
 if __name__ == '__main__':
     app.run(debug=True)

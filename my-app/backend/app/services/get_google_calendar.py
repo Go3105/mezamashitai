@@ -4,6 +4,7 @@ import json
 import googleapiclient.discovery
 import google.auth
 
+
 # Preparation for Google API
 def fetch_today_event():
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
