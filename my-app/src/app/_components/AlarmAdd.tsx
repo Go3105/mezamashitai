@@ -1,15 +1,24 @@
+// app/_components/AlarmAdd.tsx
 "use client";
 
 import React, { useState } from "react";
+import { useAlarmContext } from "./AlarmContext";
+import { useRouter } from "next/navigation";
 
 const AlarmAdd = () => {
     const [time, setTime] = useState({ hours: "00", minutes: "00" });
     const [sound, setSound] = useState("default");
     const [remind, setRemind] = useState(false);
+    const { addAlarm } = useAlarmContext();
+    const router = useRouter();
 
     const handleSave = () => {
-        console.log("アラームを保存:", { time, sound, remind });
-        // APIエンドポイントに送信するコードを追加
+        const formattedTime = `${time.hours}:${time.minutes}`;
+        addAlarm({
+            id: 0, time: formattedTime, sound, remind,
+            isActive: false
+        });
+        router.push("/alarm"); // 一覧画面に戻る
     };
 
     return (
