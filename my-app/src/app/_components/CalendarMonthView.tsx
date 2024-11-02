@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // App RouterではuseRouterをnext/navigationからインポート
 
 type DateInfo = {
   year: number;
@@ -10,8 +11,8 @@ type DateInfo = {
 type Event = {
   title: string;
   description?: string;
-  startTime?: string; // 開始時刻（例: "10:00"）、終日イベントの場合は undefined
-  endTime?: string; // 終了時刻（例: "11:00"）、終日イベントの場合は undefined
+  startTime?: string;
+  endTime?: string;
 };
 
 const events: { [key: string]: Event[] } = {
@@ -23,41 +24,139 @@ const events: { [key: string]: Event[] } = {
       endTime: "11:00",
     },
     {
+      title: "会議2",
+      description: "プロジェクトBの進捗",
+      startTime: "10:30",
+      endTime: "11:30",
+    },
+    {
+      title: "会議3",
+      description: "プロジェクトBの進捗",
+      startTime: "10:50",
+      endTime: "13:30",
+    },
+    {
       title: "出張",
       description: "大阪へ出張",
       startTime: "13:00",
       endTime: "17:00",
     },
+    { title: "誕生日", description: "友達の誕生日" },
+  ],
+  "2024-11-04": [
     {
-      title: "誕生日",
-      description: "友達の誕生日",
+      title: "週次ミーティング",
+      description: "全体進捗報告",
+      startTime: "09:00",
+      endTime: "10:00",
+    },
+    {
+      title: "ランチミーティング",
+      description: "チームビルディング",
+      startTime: "12:00",
+      endTime: "13:00",
+    },
+    {
+      title: "英語レッスン",
+      description: "会話練習",
+      startTime: "18:00",
+      endTime: "19:00",
     },
   ],
   "2024-11-05": [
     {
-      title: "出張",
-      description: "大阪へ出張",
-      startTime: "09:00",
-      endTime: "17:00",
+      title: "プロジェクトレビュー",
+      description: "開発の進捗確認",
+      startTime: "10:00",
+      endTime: "11:30",
     },
+    {
+      title: "ランニング",
+      description: "夕方の運動",
+      startTime: "17:00",
+      endTime: "18:00",
+    },
+    { title: "映画鑑賞", description: "新作映画を観る" },
   ],
   "2024-11-06": [
     {
+      title: "顧客訪問",
+      description: "新製品の説明",
+      startTime: "14:00",
+      endTime: "16:00",
+    },
+    {
+      title: "リサーチ",
+      description: "次のプロジェクトの準備",
+      startTime: "16:30",
+      endTime: "18:00",
+    },
+    { title: "家族とのディナー", description: "誕生日のお祝い" },
+  ],
+  "2024-11-07": [
+    {
+      title: "カンファレンス参加",
+      description: "技術トレンドの講演",
+      startTime: "09:00",
+      endTime: "12:00",
+    },
+    {
+      title: "ランチ",
+      description: "同僚と外食",
+      startTime: "12:30",
+      endTime: "13:30",
+    },
+    {
       title: "会議",
-      description: "プロジェクトAの進捗",
+      description: "プロジェクトCの進捗",
       startTime: "15:00",
       endTime: "16:00",
+    },
+  ],
+  "2024-11-08": [
+    {
+      title: "マーケティングミーティング",
+      description: "新製品の広告戦略",
+      startTime: "11:00",
+      endTime: "12:00",
+    },
+    {
+      title: "ワークショップ",
+      description: "スキルアップのためのトレーニング",
+      startTime: "14:00",
+      endTime: "17:00",
+    },
+    { title: "読書", description: "新しい本を読む" },
+  ],
+  "2024-11-09": [
+    {
+      title: "サッカー観戦",
+      description: "地元チームの応援",
+      startTime: "10:00",
+      endTime: "12:00",
+    },
+    {
+      title: "ショッピング",
+      description: "日用品の買い物",
+      startTime: "13:00",
+      endTime: "15:00",
+    },
+    {
+      title: "友人とディナー",
+      description: "久しぶりの再会",
+      startTime: "18:30",
+      endTime: "21:00",
     },
   ],
 };
 
 export default function Home() {
+  const router = useRouter();
   const today = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     day: new Date().getDate(),
   };
-
   const [calendar, setCalendar] = useState<(number | null)[][]>([]);
   const [currentDate, setCurrentDate] = useState<DateInfo>({
     year: today.year,
@@ -98,22 +197,24 @@ export default function Home() {
     currentDate.year === today.year &&
     currentDate.month === today.month;
 
-  // イベントの取得、ソート（時刻順）および「…」の表示を追加
   const getEventsForDate = (year: number, month: number, day: number) => {
     const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
     const eventsForDay = events[dateKey] || [];
-
-    // 時刻順にソート（終日イベントを優先し、時間の早い順）
     const sortedEvents = eventsForDay.sort((a, b) => {
-      if (!a.startTime) return -1; // aが終日イベントの場合、先に表示
-      if (!b.startTime) return 1; // bが終日イベントの場合、後に表示
-      return a.startTime.localeCompare(b.startTime); // 時間の早い順
+      if (!a.startTime) return -1;
+      if (!b.startTime) return 1;
+      return a.startTime.localeCompare(b.startTime);
     });
 
-    const hasMore = sortedEvents.length > 2; // 3件以上あるか確認
+    const hasMore = sortedEvents.length > 2;
     return { events: sortedEvents.slice(0, 2), hasMore };
+  };
+
+  const handleDateClick = (day: number) => {
+    // 日付クリックで日表示ページに遷移
+    router.push(`/calendar/${currentDate.year}/${currentDate.month}/${day}`);
   };
 
   return (
@@ -155,7 +256,8 @@ export default function Home() {
               {week.map((date, idx) => (
                 <td
                   key={idx}
-                  className="border h-[128px] w-[40px] p-2 align-top bg-white"
+                  onClick={() => date && handleDateClick(date)} // 日付クリックで日表示ページへ遷移
+                  className="border h-[128px] w-[40px] p-2 align-top bg-white cursor-pointer"
                   style={{ width: "14.2857%" }}
                 >
                   <div className="flex flex-col items-center w-full max-w-full">
@@ -183,7 +285,6 @@ export default function Home() {
                               <div
                                 key={eventIdx}
                                 className="mt-1 text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-md shadow overflow-hidden whitespace-nowrap text-ellipsis w-full max-w-full"
-                                style={{ display: "inline-block" }}
                               >
                                 {event.title}
                               </div>
