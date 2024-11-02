@@ -4,7 +4,6 @@ import CalendarMonthView from "../_components/CalendarMonthView";
 const page = () => {
   return (
     <div>
-      {" "}
       <CalendarMonthView />
     </div>
   );
