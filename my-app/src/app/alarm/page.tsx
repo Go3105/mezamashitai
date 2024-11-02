@@ -4,7 +4,7 @@ import AlarmList from "../_components/AlarmList";
 export default function AlarmPage() {
   return (
     <div>
-      <AlarmList />;
+      <AlarmList />
     </div>
   );
 }
