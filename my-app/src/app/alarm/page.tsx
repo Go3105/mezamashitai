@@ -1,9 +1,14 @@
+"use client";
+
 import React from "react";
 import AlarmList from "../_components/AlarmList";
 import Link from "next/link";
 import Tab from "../_components/Tab";
+import { useAlarmContext } from "../_components/AlarmContext";
 
 export default function AlarmPage() {
+  const { alarms } = useAlarmContext();
+
   return (
     <div>
       <Tab />    
@@ -13,7 +18,7 @@ export default function AlarmPage() {
             アラームを新規作成 ＋
           </button>
         </Link> 
-      <AlarmList />
+      <AlarmList alarms={alarms} />
     </div>
   );
 }

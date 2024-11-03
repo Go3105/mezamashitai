@@ -61,9 +61,9 @@ const AlarmAdd = () => {
                         onChange={(e) => setTime({ ...time, minutes: e.target.value })}
                         className="ml-2"
                     >
-                        {Array.from({ length: 12 }, (_, i) => (
-                            <option key={i} value={String(i * 5).padStart(2, '0')}>
-                                {String(i * 5).padStart(2, '0')}
+                        {Array.from({ length: 60 }, (_, i) => (
+                            <option key={i} value={String(i).padStart(2, '0')}>
+                                {String(i).padStart(2, '0')}
                             </option>
                         ))}
                     </select>
