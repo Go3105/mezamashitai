@@ -14,6 +14,7 @@ type AlarmContextType = {
     alarms: Alarm[];
     addAlarm: (alarm: Alarm) => void;
     toggleAlarm: (id: number) => void;
+    deleteAlarm: (id:number) => void;
 };
 
 const AlarmContext = createContext<AlarmContextType | undefined>(undefined);
@@ -33,8 +34,12 @@ export function AlarmProvider({ children }: { children: React.ReactNode }) {
         );
     };
 
+    const deleteAlarm = (id: number) => {
+        setAlarms((prevAlarms) => prevAlarms.filter((alarm) => alarm.id !== id)); // アラームを削除
+    };
+
     return (
-        <AlarmContext.Provider value={{ alarms, addAlarm, toggleAlarm }}>
+        <AlarmContext.Provider value={{ alarms, addAlarm, toggleAlarm, deleteAlarm }}>
             {children}
         </AlarmContext.Provider>
     );
