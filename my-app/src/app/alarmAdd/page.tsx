@@ -6,6 +6,7 @@ const page = () => {
   return (
     <div>
       <Tab />
+      <h2 className="text-center text-2xl p-6 font-bold">アラーム追加</h2>
       <AlarmAdd />
     </div>
   );
