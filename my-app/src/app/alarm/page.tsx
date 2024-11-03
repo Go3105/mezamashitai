@@ -6,15 +6,13 @@ import Tab from "../_components/Tab";
 export default function AlarmPage() {
   return (
     <div>
-      <Tab />
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">アラーム</h1>
+      <Tab />    
+        <h1 className="text-center text-2xl p-6 font-bold">アラーム</h1>
         <Link href="/alarmAdd">
           <button className="bg-blue-500 text-white px-4 py-2 rounded">
             アラームを新規作成 ＋
           </button>
-        </Link>
-      </div>
+        </Link> 
       <AlarmList />
     </div>
   );
