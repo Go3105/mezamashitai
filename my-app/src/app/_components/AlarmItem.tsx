@@ -7,9 +7,10 @@ type AlarmItemProps = {
         isActive: boolean;
     };
     onToggle: () => void;
+    onDelete: () => void;
 };
 
-export default function AlarmItem({ alarm, onToggle }: AlarmItemProps){
+export default function AlarmItem({ alarm, onToggle, onDelete }: AlarmItemProps){
     return(
         <li className="flex items-center justify-between mb-2">
             <span>{alarm.time}</span>
@@ -19,6 +20,7 @@ export default function AlarmItem({ alarm, onToggle }: AlarmItemProps){
                 onChange={onToggle}
                 className="toggle-checkbox"
             />
+            <button onClick={onDelete} className="ml-2 text-red-500">削除</button>
         </li>
     );
 }

@@ -5,7 +5,7 @@ import AlarmItem from "./AlarmItem";
 import { useAlarmContext } from "./AlarmContext";
 
 export default function AlarmList() {
-    const { alarms, toggleAlarm } = useAlarmContext();
+    const { alarms, toggleAlarm, deleteAlarm } = useAlarmContext();
 
     return (
         <div className="p-4">
@@ -16,6 +16,7 @@ export default function AlarmList() {
                         key={alarm.id}
                         alarm={alarm}
                         onToggle={() => toggleAlarm(alarm.id)}
+                        onDelete={() => deleteAlarm(alarm.id)}
                     />
                 ))}
             </ul>
