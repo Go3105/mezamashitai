@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/src/app/animation/styles.css"],"sourcesContent":["body {\n    width: 100vw;\n    height: 100vh;\n    overflow: hidden;\n    padding: 0;\n    margin: 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    background: linear-gradient(180deg, #f08, #d0e);\n  }\n  \n  .container {\n    width: 150px;\n    height: 150px;\n    background-image: url(\"https://framerusercontent.com/images/M4SNURkNYCDjIiopKdiL689jOQ.svg\");\n    border-radius: 30px;\n  }"],"names":[],"mappings":"AAAA;;;;;;;;;;;;AAYE"}},
+    {"offset": {"line": 19, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
