@@ -4,12 +4,22 @@ import React from "react";
 import AlarmItem from "./AlarmItem";
 import { useAlarmContext } from "./AlarmContext";
 
-export default function AlarmList() {
-    const { alarms, toggleAlarm, deleteAlarm } = useAlarmContext();
+type Alarm = {
+    id: number;
+    name: string;
+    time: string;
+    isActive: boolean;
+};
+
+type AlarmListProps = {
+    alarms: Alarm[]; // alarmsの型を定義
+};
+
+export default function AlarmList({ alarms }: AlarmListProps) {
+    const { toggleAlarm, deleteAlarm } = useAlarmContext();
 
     return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">アラーム</h2>
+        <div className="p-4"> 
             <ul>
                 {alarms.map((alarm) => (
                     <AlarmItem
