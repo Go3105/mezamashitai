@@ -34,7 +34,7 @@ const Tab = () => {
           className={`hover:bg-red-50 w-full h-full flex justify-center `}
         >
           <Image
-            src={isAlarmPage ? "/red_alarm.svg" : "/gray_alarm.svg"}
+            src={isAlarmPage ? "/red_alarm_v2.svg" : "/gray_alarm_v2.svg"}
             alt="alarm icon"
             width={48}
             height={48}
