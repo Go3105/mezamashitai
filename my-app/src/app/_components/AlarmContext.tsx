@@ -8,6 +8,7 @@ type Alarm = {
     sound: string;
     remind: boolean;
     isActive: boolean;
+    name: string;
 };
 
 type AlarmContextType = {
