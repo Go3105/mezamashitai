@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from get_google_calendar import fetch_today_event
 from quiz_generation import generate_quiz
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"]) # CORSを有効にする
 
 @app.route('/api/today_events', methods=['GET'])
 def get_today_events():
@@ -21,4 +23,4 @@ def get_today_quiz():
     return quiz, 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000)

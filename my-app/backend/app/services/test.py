@@ -5,12 +5,15 @@ import re
 import json
 import googleapiclient.discovery
 import google.auth
+from get_google_calendar import fetch_today_event
+from llama_cpp import Llama
 
 app = Flask(__name__)
 
 # CORSの設定: フロントエンドからのアクセスを許可
 CORS(app, origins=["http://localhost:3000"])
 
+# 今日のイベントを取得する関数
 def fetch_today_event():
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
     
@@ -83,5 +86,40 @@ def today_events():
     
     return jsonify(events)
 
+
+def fetch_today_quiz():
+    today_event = fetch_today_event()
+    load_example = open('example.json', 'r')
+    event_example = json.load(load_example)
+
+    llm = Llama.from_pretrained(
+        repo_id="elyza/Llama-3-ELYZA-JP-8B-GGUF",
+        filename="Llama-3-ELYZA-JP-8B-q4_k_m.gguf",
+        verbose=False
+    )
+    
+    response = llm.create_chat_completion(
+        messages = [
+            {   
+                "role": "system", "content": "あなたは優秀なクイズ作成者です"
+            },
+            {
+                "role": "user", "content": f"まず初めに、{today_event}に含まれているそれぞれの予定の時間と内容を的確に把握してください。次に、把握した情報をもとに予定の内容や時間に関する4択のクイズを必ず1つだけ生成してください。その際、正しい選択肢は1つのみで、他3つは全て誤りの選択肢となるようにすることを徹底してください。また、各選択肢の文字数は10文字以下となるように工夫して問題を作成してください。そして、次の例と同じように括弧を含めて確実に正しいjson形式で出力を行ってください。なお、jsonのみを出力し、その他の文章は一切出力しないようにしてください。出力の例 : {event_example}"
+            }
+        ],
+        temperature = 0.9,
+    )
+
+    return response["choices"][0]["message"]["content"]
+
+@app.route('/api/today_quiz', methods=['GET'])
+def today_quiz():
+    quiz = fetch_today_quiz()
+    
+    # エラーレスポンスの処理
+    if isinstance(quiz, dict) and "error" in quiz:
+        return jsonify(quiz), 500
+    
+    return quiz
 if __name__ == "__main__":
     app.run(port=5000)
