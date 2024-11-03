@@ -6,17 +6,19 @@ import { useAlarmContext } from "./AlarmContext";
 import { useRouter } from "next/navigation";
 
 const AlarmAdd = () => {
+    const [name, setName] = useState("");
     const [time, setTime] = useState({ hours: "00", minutes: "00" });
     const [sound, setSound] = useState("default");
     const [remind, setRemind] = useState(false);
+
     const { addAlarm } = useAlarmContext();
     const router = useRouter();
 
     const handleSave = () => {
         const formattedTime = `${time.hours}:${time.minutes}`;
         addAlarm({
-            id: 0, time: formattedTime, sound, remind,
-            isActive: false
+            id: 0, name, time: formattedTime, sound, remind,
+            isActive: true
         });
         router.push("/alarm"); // 一覧画面に戻る
     };
@@ -24,6 +26,19 @@ const AlarmAdd = () => {
     return (
         <div className="p-4">
             <h2 className="text-xl font-bold mb-4">アラーム追加</h2>
+            <div className="mb-4">
+                <label htmlFor="name" className="block mb-2">アラーム名</label>
+                <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="bordar rounded p-2 w-full"
+                    placeholder="アラーム名を入力"
+                />
+            </div>
+
+
             <div className="mb-4">
                 <label htmlFor="time" className="block mb-2">時間を選択</label>
                 <div className="flex">

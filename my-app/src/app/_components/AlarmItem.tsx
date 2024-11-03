@@ -3,6 +3,7 @@ import React from "react";
 type AlarmItemProps = {
     alarm: {
         id: number;
+        name: string;
         time: string;
         isActive: boolean;
     };
@@ -19,13 +20,14 @@ export default function AlarmItem({ alarm, onToggle, onDelete }: AlarmItemProps)
     };
 
     return(
-        <li className="flex items-center justify-between mb-2">
-            <span>{alarm.time}</span>
+        <li className="flex items-center justify-center text-center mb-2">
+            <span className="flex-1">{alarm.name}</span>
+            <span className="flex-1">{alarm.time}</span>
             <input
                 type="checkbox"
                 checked={alarm.isActive}
                 onChange={onToggle}
-                className="toggle-checkbox"
+                className="toggle-checkbox mx-2"
             />
             <button onClick={handleDelete} className="ml-2 text-red-500">削除</button>
         </li>
