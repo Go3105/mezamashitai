@@ -1,0 +1,18 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #f08, #d0e);
+  }
+  
+  .container {
+    width: 150px;
+    height: 150px;
+    background-image: url("https://framerusercontent.com/images/M4SNURkNYCDjIiopKdiL689jOQ.svg");
+    border-radius: 30px;
+  }
